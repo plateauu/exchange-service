@@ -1,0 +1,12 @@
+POST http://localhost:8989/account/
+Content-Type: application/json
+
+{
+  "name": "String",
+  "surname": "String",
+  "pesel": "String",
+  "amount": "1234.213"
+}
+
+###
+POST https://localhost:8989
