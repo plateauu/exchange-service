@@ -9,4 +9,4 @@ Content-Type: application/json
 }
 
 ###
-POST https://localhost:8989
+GET http://localhost:8989/account/31232132
