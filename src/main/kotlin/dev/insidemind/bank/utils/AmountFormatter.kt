@@ -18,3 +18,6 @@ object AmountFormatter {
     fun format(amount: BigDecimal): String =
             decimalFormat.format(amount)
 }
+
+fun String.parse() = AmountFormatter.parse(this)
+fun BigDecimal.format() = AmountFormatter.format(this)
