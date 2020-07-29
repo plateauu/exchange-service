@@ -1,5 +1,6 @@
 package dev.insidemind.bank.api
 
+import com.fasterxml.jackson.annotation.JsonValue
 import dev.insidemind.bank.utils.AmountFormatter
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.*
@@ -20,7 +21,7 @@ class BankAccountController {
     @Get("/{accountId}")
     fun getAccountBalance(@PathVariable accountId: String): HttpResponse<GetAccountBalanceResponse> {
         val balance = AmountFormatter.parse("123,23")
-        return HttpResponse.ok(GetAccountBalanceResponse(balance, balance))
+        return HttpResponse.ok(GetAccountBalanceResponse(listOf(Balance(balance, Currency.PLN), Balance(balance, Currency.USD))))
     }
 }
 
@@ -29,9 +30,22 @@ object PolishLocale {
 }
 
 data class GetAccountBalanceResponse(
-        val amountInPln: BigDecimal,
-        val amountInUsd: BigDecimal
+        val balances: List<Balance>
 )
+
+data class Balance(
+        val amount: BigDecimal,
+        val currency: Currency
+) {
+    @JsonValue
+    override fun toString(): String {
+        return "$amount $currency"
+    }
+}
+
+enum class Currency {
+    PLN, USD
+}
 
 data class CreateResponse(
         val accountId: String,
