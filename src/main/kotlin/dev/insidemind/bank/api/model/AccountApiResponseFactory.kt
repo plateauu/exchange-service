@@ -1,6 +1,6 @@
 package dev.insidemind.bank.api.model
 
-import dev.insidemind.bank.service.CreateAccountEventResponse
+import dev.insidemind.bank.model.event.CreateAccountEventResponse
 import javax.inject.Singleton
 
 @Singleton

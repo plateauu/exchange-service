@@ -3,7 +3,7 @@ package dev.insidemind.bank.api
 import dev.insidemind.bank.api.model.*
 import dev.insidemind.bank.model.Amount
 import dev.insidemind.bank.model.Currency
-import dev.insidemind.bank.service.AccountService
+import dev.insidemind.bank.service.AccountWriteService
 import dev.insidemind.bank.utils.parse
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.*
@@ -12,14 +12,14 @@ import org.slf4j.LoggerFactory
 
 @Controller("/account")
 class BankAccountController(
-        private val accountService: AccountService,
+        private val accountWriteService: AccountWriteService,
         private val apiResponseFactory: AccountApiResponseFactory
 ) {
     private val logger: Logger = LoggerFactory.getLogger(BankAccountController::class.java)
 
     @Post
     fun create(@Body accountRequest: CreateAccountRequest): HttpResponse<CreateAccountResponse> {
-        return accountService.createAccount(accountRequest.toEvent())
+        return accountWriteService.createAccount(accountRequest.toEvent())
                 .let {
                     HttpResponse.ok(apiResponseFactory.createCreateAccountResponse(it))
                 }
