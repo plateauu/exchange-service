@@ -30,12 +30,12 @@ data class CreateAccountRequest(
         val name: String,
         val surname: String,
         val pesel: String,
-        val amount: BigDecimal
+        val amount: Amount
 ) {
     fun toEvent(): CreateAccountEvent = CreateAccountEvent(
             name = this.name,
             surname = this.surname,
             pesel = Pesel(this.pesel),
-            amount = Amount(this.amount)
+            amount = this.amount
     )
 }

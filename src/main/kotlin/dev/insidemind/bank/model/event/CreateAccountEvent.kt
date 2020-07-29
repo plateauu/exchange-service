@@ -8,4 +8,6 @@ data class CreateAccountEvent(
         val surname: String,
         val pesel: Pesel,
         val amount: Amount
-)
+) {
+    fun isZero() = amount.isZero()
+}
