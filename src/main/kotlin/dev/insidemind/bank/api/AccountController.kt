@@ -23,12 +23,12 @@ class AccountController(
     }
 
     @Get("/{accountId}")
-    fun getAccountBalance(@PathVariable accountId: String): HttpResponse<GetAccountBalanceResponse> {
+    fun getAccountBalance(@PathVariable accountId: String): HttpResponse<AllSubAccountBalanceResponse> {
         val balance = "123,23"
-        return HttpResponse.ok(GetAccountBalanceResponse(
+        return HttpResponse.ok(AllSubAccountBalanceResponse(
                 mapOf(
-                        Currency.PLN to BalanceResponse(WebAmount(balance), Currency.PLN),
-                        Currency.USD to BalanceResponse(WebAmount(balance), Currency.USD)
+                        Currency.PLN to SubAccountBalanceResponse(WebAmount(balance), Currency.PLN),
+                        Currency.USD to SubAccountBalanceResponse(WebAmount(balance), Currency.USD)
                 )
         ))
     }

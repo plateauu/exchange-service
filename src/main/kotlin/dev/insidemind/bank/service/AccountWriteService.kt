@@ -13,7 +13,7 @@ class AccountWriteService(
     fun createAccount(event: CreateAccountEvent): CreateAccountEventResponse {
         val account = accountFactory.fromEvent(event)
         accountWriteRepository.save(account)
-        return CreateAccountEventResponse(account.id, account.balances)
+        return CreateAccountEventResponse(account.id, account.subAccounts)
     }
 }
 

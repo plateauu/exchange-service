@@ -38,17 +38,17 @@ class AccountControllerTest extends Specification {
         then:
         response.status == HttpStatus.OK
 
-        and:
+        and: 'Sub accounts should be created'
         with(response.body.get()){
             it.accountId == PESEL
-            it.balances[Currency.PLN] == "$AMOUNT PLN"
-            it.balances[Currency.USD] == '0,00 USD'
+            it.subAccounts[Currency.PLN] == "$AMOUNT PLN"
+            it.subAccounts[Currency.USD] == '0,00 USD'
         }
     }
 
     static class Response {
         String accountId
-        Map<Currency, String> balances
+        Map<Currency, String> subAccounts
     }
 
 }
