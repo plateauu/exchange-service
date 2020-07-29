@@ -1,9 +1,6 @@
 package dev.insidemind.bank.service
 
-import dev.insidemind.bank.model.Account
-import dev.insidemind.bank.model.AccountId
-import dev.insidemind.bank.model.Balance
-import dev.insidemind.bank.model.Currency
+import dev.insidemind.bank.model.*
 import dev.insidemind.bank.model.event.CreateAccountEvent
 import dev.insidemind.bank.utils.toBalance
 import java.math.BigDecimal
@@ -29,10 +26,9 @@ class AccountFactory(
         return if (event.isZero()) {
             createZeroBalance()
         } else {
-            val rating = currencyRatingService.getCurrentRating()
             val amount = event.amount
             val pln = Currency.PLN to amount
-            val usd = Currency.USD to amount.multiply(rating.value)
+            val usd = Currency.USD to Amount(BigDecimal.ZERO)
             return mapOf(pln, usd).mapValues { (currency, amount) -> Balance(amount,currency) }
         }
     }

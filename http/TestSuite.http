@@ -5,7 +5,7 @@ Content-Type: application/json
   "name": "String",
   "surname": "String",
   "pesel": "08484848451",
-  "amount": "1234.213"
+  "amount": "1234,215565"
 }
 
 ###

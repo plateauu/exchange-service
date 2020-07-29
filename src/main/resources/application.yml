@@ -20,4 +20,5 @@ micronaut:
 
 logger:
   levels:
-    dev.insidemind.bank
+    dev.insidemind.bank: DEBUG
+    io.micronaut.context.condition: INFO
