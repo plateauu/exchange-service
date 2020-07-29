@@ -1,6 +1,6 @@
 package dev.insidemind.bank.utils
 
-import dev.insidemind.bank.api.PolishLocale
+import dev.insidemind.bank.model.PolishLocale
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.DecimalFormat
