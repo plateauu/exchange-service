@@ -78,7 +78,7 @@ compileTestKotlin {
 }
 kapt {
     arguments {
-        arg("micronaut.processing.incremental", true)
+        arg("micronaut.processing.incremental", false)
         arg("micronaut.processing.annotations", "dev.insidemind.bank.*")
         arg("micronaut.processing.group", "dev.insidemind.bank")
         arg("micronaut.processing.module", "bank")
