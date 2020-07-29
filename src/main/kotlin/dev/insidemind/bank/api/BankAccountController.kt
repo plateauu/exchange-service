@@ -1,11 +1,9 @@
 package dev.insidemind.bank.api
 
-import dev.insidemind.bank.api.model.BalanceResponse
-import dev.insidemind.bank.api.model.CreateRequest
-import dev.insidemind.bank.api.model.CreateResponse
-import dev.insidemind.bank.api.model.GetAccountBalanceResponse
+import dev.insidemind.bank.api.model.*
 import dev.insidemind.bank.model.Amount
 import dev.insidemind.bank.model.Currency
+import dev.insidemind.bank.service.AccountService
 import dev.insidemind.bank.utils.parse
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.*
@@ -13,12 +11,19 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 @Controller("/account")
-class BankAccountController {
+class BankAccountController(
+        private val accountService: AccountService,
+        private val apiResponseFactory: AccountApiResponseFactory
+) {
     private val logger: Logger = LoggerFactory.getLogger(BankAccountController::class.java)
 
     @Post
-    fun create(@Body request: CreateRequest): HttpResponse<CreateResponse> =
-            HttpResponse.ok(CreateResponse(request.pesel, request.amount))
+    fun create(@Body accountRequest: CreateAccountRequest): HttpResponse<CreateAccountResponse> {
+        return accountService.createAccount(accountRequest.toEvent())
+                .let {
+                    HttpResponse.ok(apiResponseFactory.createCreateAccountResponse(it))
+                }
+    }
 
     @Get("/{accountId}")
     fun getAccountBalance(@PathVariable accountId: String): HttpResponse<GetAccountBalanceResponse> {
@@ -31,4 +36,3 @@ class BankAccountController {
         ))
     }
 }
-

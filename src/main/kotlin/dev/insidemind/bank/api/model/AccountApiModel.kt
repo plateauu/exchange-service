@@ -3,6 +3,8 @@ package dev.insidemind.bank.api.model
 import com.fasterxml.jackson.annotation.JsonValue
 import dev.insidemind.bank.model.Amount
 import dev.insidemind.bank.model.Currency
+import dev.insidemind.bank.model.Pesel
+import dev.insidemind.bank.model.event.CreateAccountEvent
 import java.math.BigDecimal
 
 data class GetAccountBalanceResponse(
@@ -19,14 +21,21 @@ data class BalanceResponse(
     }
 }
 
-data class CreateResponse(
+data class CreateAccountResponse(
         val accountId: String,
         val balances: Map<Currency, BalanceResponse>
 )
 
-data class CreateRequest(
+data class CreateAccountRequest(
         val name: String,
         val surname: String,
         val pesel: String,
         val amount: BigDecimal
-)
+) {
+    fun toEvent(): CreateAccountEvent = CreateAccountEvent(
+            name = this.name,
+            surname = this.surname,
+            pesel = Pesel(this.pesel),
+            amount = Amount(this.amount)
+    )
+}
