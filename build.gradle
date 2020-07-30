@@ -45,6 +45,7 @@ dependencies {
         exclude group: "org.codehaus.groovy", module: "groovy-all"
     }
     testImplementation("io.micronaut.test:micronaut-test-spock")
+    testImplementation('org.objenesis:objenesis:3.1')
 }
 
 test.classpath += configurations.developmentOnly
