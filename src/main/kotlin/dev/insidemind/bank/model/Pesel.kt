@@ -1,19 +1,31 @@
 package dev.insidemind.bank.model
 
 import dev.insidemind.bank.service.PeselValidator
+import java.time.Clock
 import java.time.LocalDate
+import java.time.Period
 
-class Pesel(val value: String) {
+class Pesel(val value: String, val clock: Clock = Clock.systemDefaultZone()) {
 
-    fun validate() {
+    constructor(value: String) : this (value, Clock.systemDefaultZone())
+
+    companion object {
+        private const val LEGAL_AGE = 18
+    }
+
+    init {
+        validate()
+    }
+
+    private fun validate() {
         PeselValidator.validate(this)
     }
 
-    fun isLegalAge(): Boolean {
-        return true
-    }
+    fun isAdult(): Boolean =
+        Period.between(getBirthDate(), LocalDate.now(clock)).years >= LEGAL_AGE
 
-    fun getBirthDate(): LocalDate {
+
+    private fun getBirthDate(): LocalDate {
         val birthDateArray = value.substring(0, 6)
 
         val (monthEvaluated, century) = evaluateCentury(birthDateArray[2].toString().toInt())

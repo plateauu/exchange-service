@@ -19,9 +19,8 @@ class AccountWriteService(
     }
 
     private fun validatePerson(pesel: Pesel) {
-        pesel.validate()
-        if (!pesel.isLegalAge())
-            throw RuntimeException("Account is available for a full legal person")
+        if (!pesel.isAdult())
+            throw RuntimeException("Account is available for a adult person")
     }
 }
 
