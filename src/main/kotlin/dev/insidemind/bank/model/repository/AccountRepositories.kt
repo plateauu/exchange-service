@@ -6,7 +6,7 @@ import javax.inject.Singleton
 
 @Singleton
 class AccountReadRepository : AccountRepository() {
-    override fun find(id: AccountId): Account {
+    override fun find(id: AccountId): Account? {
         return database[id] ?: throw RuntimeException("Account: $id does not exist")
     }
 }
@@ -21,6 +21,6 @@ class AccountWriteRepository : AccountRepository() {
 
 abstract class AccountRepository {
     protected val database: MutableMap<AccountId, Account> = mutableMapOf()
-    open fun find(id: AccountId): Account = throw RuntimeException("Not implemented")
+    open fun find(id: AccountId): Account? = throw RuntimeException("Not implemented")
     open fun save(account: Account): Account = throw RuntimeException("Not implemented")
 }
