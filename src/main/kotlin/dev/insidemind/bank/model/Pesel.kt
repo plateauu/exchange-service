@@ -1,3 +1,15 @@
 package dev.insidemind.bank.model
 
-data class Pesel(val value: String)
+import dev.insidemind.bank.service.PeselValidator
+
+class Pesel(val value: String) {
+
+    fun validate() {
+        PeselValidator.validate(this)
+    }
+
+    fun isMultiAge() {
+
+    }
+
+}
