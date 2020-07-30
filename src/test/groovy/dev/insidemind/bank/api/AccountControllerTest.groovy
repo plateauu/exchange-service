@@ -32,6 +32,7 @@ class AccountControllerTest extends Specification {
         def exchange = client
                 .toBlocking()
                 .exchange(HttpRequest.create(HttpMethod.POST, "/account").body(request), Response.class)
+
         when:
         def response = exchange
 
@@ -50,5 +51,4 @@ class AccountControllerTest extends Specification {
         String accountId
         Map<Currency, String> subAccounts
     }
-
 }
