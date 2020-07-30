@@ -1,5 +1,6 @@
 package dev.insidemind.bank.service
 
+import dev.insidemind.bank.model.Pesel
 import dev.insidemind.bank.model.event.CreateAccountEvent
 import dev.insidemind.bank.model.event.CreateAccountEventResponse
 import dev.insidemind.bank.model.repository.AccountWriteRepository
@@ -11,11 +12,16 @@ class AccountWriteService(
         private val accountFactory: AccountFactory
 ) {
     fun createAccount(event: CreateAccountEvent): CreateAccountEventResponse {
-        event.pesel.validate()
-
+        validatePerson(event.pesel)
         val account = accountFactory.fromEvent(event)
         accountWriteRepository.save(account)
         return CreateAccountEventResponse(account.id, account.subAccounts)
+    }
+
+    private fun validatePerson(pesel: Pesel) {
+        pesel.validate()
+        if (!pesel.isLegalAge())
+            throw RuntimeException("Account is available for a full legal person")
     }
 }
 
