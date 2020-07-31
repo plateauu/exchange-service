@@ -29,12 +29,10 @@ class AccountControllerTest extends Specification {
         given:
         def request = new CreateAccountRequest(NAME, SURE_NAME, PESEL, AMOUNT)
 
-        def exchange = client
-                .toBlocking()
-                .exchange(HttpRequest.create(HttpMethod.POST, "/account").body(request), Response.class)
-
         when:
-        def response = exchange
+        def response = client
+                .toBlocking()
+                .exchange(HttpRequest.create(HttpMethod.POST, "/account").body(request), TestResponse.class)
 
         then:
         response.status == HttpStatus.OK
@@ -47,7 +45,30 @@ class AccountControllerTest extends Specification {
         }
     }
 
-    static class Response {
+    def 'Should get account balance'() {
+        given: 'Account is created'
+        def request = new CreateAccountRequest(NAME, SURE_NAME, PESEL, AMOUNT)
+        client
+                .toBlocking()
+                .exchange(HttpRequest.create(HttpMethod.POST, '/account').body(request), TestResponse.class)
+
+        when: 'Get request is invoked'
+        def response = client
+                .toBlocking()
+                .exchange("/account/$PESEL", TestResponse.class)
+
+        then:
+        response.status == HttpStatus.OK
+
+        and:
+        with(response.body.get()) {
+            it.accountId == PESEL
+            it.subAccounts[Currency.PLN] == "$AMOUNT PLN"
+            it.subAccounts[Currency.USD] == '0,00 USD'
+        }
+    }
+
+    static class TestResponse {
         String accountId
         Map<Currency, String> subAccounts
     }

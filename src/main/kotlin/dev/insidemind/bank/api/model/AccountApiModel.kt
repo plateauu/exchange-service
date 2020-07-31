@@ -10,7 +10,8 @@ import dev.insidemind.bank.utils.format
 import dev.insidemind.bank.utils.parse
 import java.math.BigDecimal
 
-data class AllSubAccountBalanceResponse(
+data class GetAccountBalanceResponse(
+        val accountId: String,
         val subAccounts: Map<Currency, SubAccountBalanceResponse>
 )
 

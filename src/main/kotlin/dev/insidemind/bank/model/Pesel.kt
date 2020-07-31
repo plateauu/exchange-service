@@ -5,9 +5,12 @@ import java.time.Clock
 import java.time.LocalDate
 import java.time.Period
 
-class Pesel(val value: String, val clock: Clock = Clock.systemDefaultZone()) {
+class Pesel(
+        val value: String,
+        private val clock: Clock = Clock.systemDefaultZone()
+) {
 
-    constructor(value: String) : this (value, Clock.systemDefaultZone())
+    constructor(value: String) : this(value, Clock.systemDefaultZone())
 
     companion object {
         private const val LEGAL_AGE = 18
@@ -22,8 +25,7 @@ class Pesel(val value: String, val clock: Clock = Clock.systemDefaultZone()) {
     }
 
     fun isAdult(): Boolean =
-        Period.between(getBirthDate(), LocalDate.now(clock)).years >= LEGAL_AGE
-
+            Period.between(getBirthDate(), LocalDate.now(clock)).years >= LEGAL_AGE
 
     private fun getBirthDate(): LocalDate {
         val birthDateArray = value.substring(0, 6)

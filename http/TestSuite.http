@@ -4,9 +4,9 @@ Content-Type: application/json
 {
   "name": "String",
   "surname": "String",
-  "pesel": "08484848451",
+  "pesel": "84080808057",
   "amount": "1234,215565"
 }
 
 ###
-GET http://localhost:8989/account/31232132
+GET http://localhost:8989/account/84080808057

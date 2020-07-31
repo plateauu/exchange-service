@@ -15,7 +15,7 @@ object PeselValidator {
         val peselIntArray = peselArray.map { it.toString().toInt() }
 
         if (peselIntArray.size != PESEL_LENGHT)
-            throw PeselValidationException("Pesel number [$pesel] is has wrong number of digits")
+            throw PeselValidationException("Pesel number [$pesel] has wrong number of digits")
 
         var sum = 0
         for (i in 0..9) {
