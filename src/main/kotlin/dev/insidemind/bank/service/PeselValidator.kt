@@ -8,19 +8,34 @@ object PeselValidator {
 
     fun validate(pesel: Pesel) {
 
-        val array = pesel.value
-                .toCharArray()
-                .map { it.toString().toInt() }
+        val peselArray = pesel.value.toCharArray()
 
-        if (array.size != PESEL_LENGHT) throw PeselValidationException("Pesel number [$pesel] is has wrong number of digits")
+        isAllDigits(peselArray, pesel)
+
+        val peselIntArray = peselArray.map { it.toString().toInt() }
+
+        if (peselIntArray.size != PESEL_LENGHT)
+            throw PeselValidationException("Pesel number [$pesel] is has wrong number of digits")
 
         var sum = 0
         for (i in 0..9) {
-            sum += array[i] * getMultiplier(i + 1)
+            sum += peselIntArray[i] * getMultiplier(i + 1)
         }
 
+        isCheckNumberCorrect(sum, peselIntArray)
+    }
+
+    private fun isAllDigits(peselArray: CharArray, pesel: Pesel) =
+            peselArray.forEach {
+                if (!it.isDigit()) throw PeselValidationException("Wrong pesel: $pesel .Pesel number may contain only digits.")
+            }
+
+    private fun isCheckNumberCorrect(
+            sum: Int,
+            pesel: List<Int>
+    ) {
         val modulo = sum % 10
-        val lastDigit = array.last()
+        val lastDigit = pesel.last()
 
         if (modulo == 0) {
             if (lastDigit != 0)

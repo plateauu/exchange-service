@@ -28,6 +28,6 @@ class PeselValidatorTest extends Specification {
         thrown PeselValidationException
 
         where:
-        pesel << ['24121845835', '81082917790', '20270103571', '08291779', '2027010357123432']
+        pesel << ['24121845835', '81082917790', '20270103571', '08291779', '2027010357123432', '23454A']
     }
 }
