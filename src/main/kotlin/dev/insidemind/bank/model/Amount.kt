@@ -3,7 +3,7 @@ package dev.insidemind.bank.model
 import dev.insidemind.bank.utils.format
 import java.math.BigDecimal
 
-inline class Amount(val value: BigDecimal) {
+class Amount(val value: BigDecimal) {
 
     fun isZero() = value.compareTo(BigDecimal.ZERO) == 0
 
