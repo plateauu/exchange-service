@@ -1,8 +1,5 @@
 package dev.insidemind.bank.model
 
-import dev.insidemind.bank.model.event.EventType
-import java.time.LocalDateTime
-
 class SubAccount(
         val currency: Currency,
         initOperation: Operation
@@ -23,8 +20,3 @@ class SubAccount(
     }
 }
 
-data class Operation(
-        val amount: Amount,
-        val timestamp: LocalDateTime,
-        val type: EventType
-)

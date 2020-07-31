@@ -9,10 +9,3 @@ data class Account(
     fun unwrapId() = id.pesel.value
 }
 
-data class AccountId(val pesel: Pesel) {
-    constructor(pesel: String) : this(Pesel(pesel))
-
-    override fun toString(): String {
-        return pesel.toString()
-    }
-}

@@ -29,14 +29,14 @@ class AccountFactory(
             val pln = Currency.PLN to amount
             val usd = Currency.USD to Amount(BigDecimal.ZERO)
             return mapOf(pln, usd).mapValues { (currency, amount) ->
-                SubAccount(currency, Operation(amount, event.timestamp, event.type))
+                SubAccount(currency, Operation.income(amount, event.timestamp, event.type))
             }
         }
     }
 
     private fun createZeroSubAccount(event: CreateAccountEvent): Map<Currency, SubAccount> {
         return Currency.values()
-                .map { it to SubAccount(it, Operation(Amount.ZERO, event.timestamp, event.type)) }
+                .map { it to SubAccount(it, Operation.income(Amount.ZERO, event.timestamp, event.type)) }
                 .toMap()
     }
 }
