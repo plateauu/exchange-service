@@ -40,7 +40,7 @@ class AccountControllerTest extends Specification {
         response.status == HttpStatus.OK
 
         and: 'Sub accounts should be created'
-        with(response.body.get()){
+        with(response.body.get()) {
             it.accountId == PESEL
             it.subAccounts[Currency.PLN] == "$AMOUNT PLN"
             it.subAccounts[Currency.USD] == '0,00 USD'
