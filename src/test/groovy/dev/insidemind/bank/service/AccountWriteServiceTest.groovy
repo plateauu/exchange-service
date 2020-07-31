@@ -2,6 +2,7 @@ package dev.insidemind.bank.service
 
 import dev.insidemind.bank.TestObjectsRepository
 import dev.insidemind.bank.model.Account
+import dev.insidemind.bank.model.AccountId
 import dev.insidemind.bank.model.Currency
 import dev.insidemind.bank.model.Pesel
 import dev.insidemind.bank.model.event.CreateAccountEvent
@@ -21,9 +22,9 @@ class AccountWriteServiceTest extends Specification {
     private AccountWriteService service
 
     void setup() {
-        readService = GroovyStub(AccountReadService)
+        readService = Stub(AccountReadService)
         writeRepository = new AccountWriteRepository()
-        accountFactory = new AccountFactory(GroovyStub(CurrencyRatingService))
+        accountFactory = new AccountFactory(Stub(CurrencyRatingService))
 
         service = new AccountWriteService(writeRepository, readService, accountFactory)
     }
@@ -50,10 +51,10 @@ class AccountWriteServiceTest extends Specification {
         def clock = TestObjectsRepository.clock(LocalDate.of(2020, 7, 9))
         def pesel = new Pesel('02270902958', clock)
         def event = new CreateAccountEvent('test', 'test', pesel, 100.9g)
-        def account = new Account(pesel, event.name, event.surname, [:])
+        def account = new Account(new AccountId(pesel), event.name, event.surname, [:])
 
         and: 'Account exists'
-        readService.findAccountFor(_ as Pesel) >> account
+        readService.findAccountFor(_ as AccountId) >> account
 
         when:
         service.createAccount(event)
@@ -66,10 +67,11 @@ class AccountWriteServiceTest extends Specification {
         given:
         def clock = TestObjectsRepository.clock(LocalDate.of(2020, 7, 9))
         def pesel = new Pesel('02270902958', clock)
+        def accountId = new AccountId(pesel)
         def event = new CreateAccountEvent('test', 'test', pesel, 100.9g)
 
         and: 'Account does not exist'
-        readService.findAccountFor(_ as Pesel) >> null
+        readService.findAccountFor(_ as AccountId) >> null
 
         when:
         service.createAccount(event)
@@ -78,10 +80,10 @@ class AccountWriteServiceTest extends Specification {
         writeRepository.database.size() == 1
 
         and:
-        with(writeRepository.database[pesel]){
+        with(writeRepository.database[accountId]) {
             it.surname == event.surname
             it.name == event.name
-            it.id == event.pesel
+            it.id.pesel == event.pesel
             it.subAccounts[Currency.PLN].amount == event.amount
             it.subAccounts[Currency.USD].amount == BigDecimal.ZERO
         }

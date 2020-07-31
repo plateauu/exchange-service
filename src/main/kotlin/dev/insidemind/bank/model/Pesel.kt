@@ -46,6 +46,22 @@ class Pesel(val value: String, val clock: Clock = Clock.systemDefaultZone()) {
                 8, 9 -> monthNumber - 8 to 1800
                 else -> throw RuntimeException("Inconsistent pesel number. Unable to find birth date at pesel $value")
             }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Pesel
+
+        if (value != other.value) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return value.hashCode()
+    }
+
 }
 
 private typealias Month = Int

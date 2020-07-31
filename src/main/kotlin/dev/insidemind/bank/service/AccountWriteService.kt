@@ -5,6 +5,7 @@ import dev.insidemind.bank.model.Pesel
 import dev.insidemind.bank.model.event.CreateAccountEvent
 import dev.insidemind.bank.model.event.CreateAccountEventResponse
 import dev.insidemind.bank.model.repository.AccountWriteRepository
+import dev.insidemind.bank.utils.annotation.Mockable
 import javax.inject.Singleton
 
 @Singleton

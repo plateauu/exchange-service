@@ -18,7 +18,7 @@ class AccountWriteRepository : AccountRepository() {
         return account
     }
 }
-
+//This is wrong!!!
 abstract class AccountRepository {
     protected val database: MutableMap<AccountId, Account> = mutableMapOf()
     open fun find(id: AccountId): Account? = throw RuntimeException("Not implemented")

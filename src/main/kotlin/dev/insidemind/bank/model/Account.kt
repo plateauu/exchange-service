@@ -7,4 +7,4 @@ data class Account(
         val subAccounts: Map<Currency, SubAccount>
 )
 
-inline class AccountId(val pesel: Pesel)
+data class AccountId(val pesel: Pesel)

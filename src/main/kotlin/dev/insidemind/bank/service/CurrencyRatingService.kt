@@ -1,8 +1,10 @@
 package dev.insidemind.bank.service
 
+import dev.insidemind.bank.utils.annotation.Mockable
 import java.math.BigDecimal
 import javax.inject.Singleton
 
+@Mockable
 @Singleton
 class CurrencyRatingService {
     fun getCurrentRating(): CurrencyRating {
