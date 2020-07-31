@@ -62,6 +62,9 @@ class Pesel(val value: String, val clock: Clock = Clock.systemDefaultZone()) {
         return value.hashCode()
     }
 
+    override fun toString(): String {
+        return value
+    }
 }
 
 private typealias Month = Int

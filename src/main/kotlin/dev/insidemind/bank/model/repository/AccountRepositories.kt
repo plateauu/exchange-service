@@ -2,25 +2,34 @@ package dev.insidemind.bank.model.repository
 
 import dev.insidemind.bank.model.Account
 import dev.insidemind.bank.model.AccountId
+import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Singleton
 
 @Singleton
-class AccountReadRepository : AccountRepository() {
-    override fun find(id: AccountId): Account? {
-        return database[id] ?: throw RuntimeException("Account: $id does not exist")
+class AccountReadRepository(
+        private val accountRepository: AccountRepository
+) {
+    fun find(id: AccountId): Account? {
+        return accountRepository.find(id)
     }
 }
 
 @Singleton
-class AccountWriteRepository : AccountRepository() {
-    override fun save(account: Account): Account {
+class AccountWriteRepository(
+        private val accountRepository: AccountRepository
+) {
+    fun save(account: Account): Account =
+            accountRepository.save(account)
+}
+
+@Singleton
+class AccountRepository {
+    private val database: MutableMap<AccountId, Account> = ConcurrentHashMap()
+
+    fun find(id: AccountId): Account? = database[id]
+
+    fun save(account: Account): Account {
         database[account.id] = account
         return account
     }
-}
-//This is wrong!!!
-abstract class AccountRepository {
-    protected val database: MutableMap<AccountId, Account> = mutableMapOf()
-    open fun find(id: AccountId): Account? = throw RuntimeException("Not implemented")
-    open fun save(account: Account): Account = throw RuntimeException("Not implemented")
 }
