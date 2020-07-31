@@ -3,6 +3,7 @@ package dev.insidemind.bank.service
 import dev.insidemind.bank.TestObjectsRepository
 import dev.insidemind.bank.model.*
 import dev.insidemind.bank.model.event.CreateAccountEvent
+import dev.insidemind.bank.model.event.EventType
 import dev.insidemind.bank.model.repository.AccountRepository
 import dev.insidemind.bank.model.repository.AccountWriteRepository
 import spock.lang.Specification
@@ -84,8 +85,15 @@ class AccountWriteServiceTest extends Specification {
             it.surname == event.surname
             it.name == event.name
             it.id.pesel == event.pesel
-            it.subAccounts[Currency.PLN].amount == event.amount
-            it.subAccounts[Currency.USD].amount == new Amount(BigDecimal.ZERO)
+            checkSubAccount(it.subAccounts[Currency.PLN], event.amount)
+            checkSubAccount(it.subAccounts[Currency.USD], Amount.ZERO)
         }
+
+    }
+
+    static void checkSubAccount(SubAccount subAccount, Amount amount){
+        assert subAccount.amount() == amount
+        assert subAccount.operations.size() == 1
+        assert subAccount.operations[0].type == EventType.CREATE
     }
 }

@@ -3,6 +3,7 @@ package dev.insidemind.bank.api
 import dev.insidemind.bank.api.model.CreateAccountRequest
 import dev.insidemind.bank.api.model.WebAmount
 import dev.insidemind.bank.model.Currency
+import dev.insidemind.bank.model.repository.AccountRepository
 import io.micronaut.http.HttpMethod
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpStatus
@@ -23,7 +24,14 @@ class AccountControllerTest extends Specification {
 
     @Inject
     @Client("/")
-    protected HttpClient client
+    private HttpClient client
+
+    @Inject
+    private AccountRepository repository
+
+    void setup(){
+        repository.database.clear()
+    }
 
     def 'Should create account when new account endpoint is called'() {
         given:

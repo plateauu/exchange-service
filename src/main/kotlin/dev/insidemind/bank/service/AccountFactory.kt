@@ -2,7 +2,6 @@ package dev.insidemind.bank.service
 
 import dev.insidemind.bank.model.*
 import dev.insidemind.bank.model.event.CreateAccountEvent
-import dev.insidemind.bank.utils.toSubAccount
 import java.math.BigDecimal
 import javax.inject.Singleton
 
@@ -11,7 +10,7 @@ class AccountFactory(
         private val currencyRatingService: CurrencyRatingService
 ) {
 
-    fun fromEvent(event: CreateAccountEvent) : Account{
+    fun fromEvent(event: CreateAccountEvent): Account {
         val subAccounts: Map<Currency, SubAccount> = createSubAccounts(event)
 
         return Account(
@@ -22,20 +21,22 @@ class AccountFactory(
         )
     }
 
-    private fun createSubAccounts(event: CreateAccountEvent): Map<Currency, SubAccount>  {
+    private fun createSubAccounts(event: CreateAccountEvent): Map<Currency, SubAccount> {
         return if (event.isZero()) {
-            createZeroSubAccount()
+            createZeroSubAccount(event)
         } else {
             val amount = event.amount
             val pln = Currency.PLN to amount
             val usd = Currency.USD to Amount(BigDecimal.ZERO)
-            return mapOf(pln, usd).mapValues { (currency, amount) -> SubAccount(amount,currency) }
+            return mapOf(pln, usd).mapValues { (currency, amount) ->
+                SubAccount(currency, Operation(amount, event.timestamp, event.type))
+            }
         }
     }
 
-    private fun createZeroSubAccount(): Map<Currency, SubAccount> {
+    private fun createZeroSubAccount(event: CreateAccountEvent): Map<Currency, SubAccount> {
         return Currency.values()
-                .map { it to BigDecimal.ZERO.toSubAccount(it) }
+                .map { it to SubAccount(it, Operation(Amount.ZERO, event.timestamp, event.type)) }
                 .toMap()
     }
 }

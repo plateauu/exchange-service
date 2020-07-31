@@ -2,6 +2,7 @@ package dev.insidemind.bank.model.repository
 
 import dev.insidemind.bank.model.Account
 import dev.insidemind.bank.model.AccountId
+import org.w3c.dom.events.Event
 import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Singleton
 

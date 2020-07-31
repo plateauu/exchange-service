@@ -15,8 +15,9 @@ class AccountWriteService(
         private val accountFactory: AccountFactory
 ) {
     fun createAccount(event: CreateAccountEvent): CreateAccountEventResponse {
-        validatePerson(event.pesel)
-        validateIfAccountExists(event.pesel)
+        val pesel = event.pesel
+        validatePerson(pesel)
+        validateIfAccountExists(pesel)
 
         val account = accountFactory.fromEvent(event)
         accountWriteRepository.save(account)

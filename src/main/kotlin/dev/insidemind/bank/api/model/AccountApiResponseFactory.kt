@@ -15,7 +15,7 @@ class AccountApiResponseFactory {
 
     private fun mapToSubAccountBalanceResponse(subAccounts: Map<Currency, SubAccount>) =
             subAccounts
-                    .mapValues { (_, balance) -> SubAccountBalanceResponse(WebAmount(balance.amount), balance.currency) }
+                    .mapValues { (_, balance) -> SubAccountBalanceResponse(WebAmount(balance.amount()), balance.currency) }
 
     fun createGetAccountBalanceResponse(account: Account): GetAccountBalanceResponse {
         val balances = mapToSubAccountBalanceResponse(account.subAccounts)
