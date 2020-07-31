@@ -9,16 +9,17 @@ import java.text.DecimalFormatSymbols
 fun String.parse() = AmountFormatter.parse(this)
 fun BigDecimal.format() = AmountFormatter.format(this)
 
-//TODO Add thread local
 private object AmountFormatter {
 
-    private val decimalFormat = DecimalFormat("#,##0.00", DecimalFormatSymbols(PolishLocale.value))
+    private val decimalFormat = ThreadLocal.withInitial {
+        DecimalFormat("#,##0.00", DecimalFormatSymbols(PolishLocale.value))
+    }
 
-    fun parse(amount: String) : BigDecimal {
-        val value: Number = decimalFormat.parse(amount)
+    fun parse(amount: String): BigDecimal {
+        val value: Number = decimalFormat.get().parse(amount)
         return BigDecimal(value.toString()).setScale(2, RoundingMode.HALF_UP)
     }
 
     fun format(amount: BigDecimal): String =
-            decimalFormat.format(amount)
+            decimalFormat.get().format(amount)
 }
