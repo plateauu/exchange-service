@@ -1,11 +1,11 @@
 package dev.insidemind.bank.service
 
 import dev.insidemind.bank.model.AccountId
+import dev.insidemind.bank.model.CreateAccountValidationException
 import dev.insidemind.bank.model.Pesel
 import dev.insidemind.bank.model.event.CreateAccountEvent
 import dev.insidemind.bank.model.event.CreateAccountEventResponse
 import dev.insidemind.bank.model.repository.AccountWriteRepository
-import dev.insidemind.bank.utils.annotation.Mockable
 import javax.inject.Singleton
 
 @Singleton
@@ -27,13 +27,15 @@ class AccountWriteService(
         val accountId = AccountId(pesel)
         accountReadService.findAccountFor(accountId)
                 ?.let {
-                    throw RuntimeException("Account for accountId: ${accountId.pesel.value} already exists. You can posses only one account")
+                    throw CreateAccountValidationException(
+                            "Account for accountId: ${accountId.pesel.value} already exists. You can posses only one account"
+                    )
                 }
     }
 
     private fun validatePerson(pesel: Pesel) {
         if (!pesel.isAdult())
-            throw RuntimeException("Account is available for a adult person")
+            throw CreateAccountValidationException("Account is available for a adult person")
     }
 }
 

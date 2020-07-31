@@ -44,7 +44,7 @@ class Pesel(val value: String, val clock: Clock = Clock.systemDefaultZone()) {
                 4, 5 -> monthNumber - 4 to 2100
                 6, 7 -> monthNumber - 6 to 2200
                 8, 9 -> monthNumber - 8 to 1800
-                else -> throw RuntimeException("Inconsistent pesel number. Unable to find birth date at pesel $value")
+                else -> throw PeselValidationException("Inconsistent pesel number. Unable to find birth date at pesel $value")
             }
 
     override fun equals(other: Any?): Boolean {

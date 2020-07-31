@@ -1,6 +1,7 @@
 package dev.insidemind.bank.service
 
 import dev.insidemind.bank.model.Pesel
+import dev.insidemind.bank.model.PeselValidationException
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -24,9 +25,9 @@ class PeselValidatorTest extends Specification {
         PeselValidator.INSTANCE.validate(new Pesel(pesel))
 
         then:
-        thrown(RuntimeException)
+        thrown PeselValidationException
 
         where:
-        pesel << ['24121845835', '81082917790', '20270103571']
+        pesel << ['24121845835', '81082917790', '20270103571', '08291779', '2027010357123432']
     }
 }

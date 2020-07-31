@@ -1,11 +1,7 @@
 package dev.insidemind.bank.service
 
 import dev.insidemind.bank.TestObjectsRepository
-import dev.insidemind.bank.model.Account
-import dev.insidemind.bank.model.AccountId
-import dev.insidemind.bank.model.Amount
-import dev.insidemind.bank.model.Currency
-import dev.insidemind.bank.model.Pesel
+import dev.insidemind.bank.model.*
 import dev.insidemind.bank.model.event.CreateAccountEvent
 import dev.insidemind.bank.model.repository.AccountRepository
 import dev.insidemind.bank.model.repository.AccountWriteRepository
@@ -47,7 +43,7 @@ class AccountWriteServiceTest extends Specification {
         service.createAccount(event)
 
         then:
-        thrown(RuntimeException)
+        thrown CreateAccountValidationException
     }
 
     def 'Should throw when account already exists'() {
@@ -64,7 +60,7 @@ class AccountWriteServiceTest extends Specification {
         service.createAccount(event)
 
         then:
-        thrown(RuntimeException)
+        thrown CreateAccountValidationException
     }
 
     def 'Should save new account to database'() {
