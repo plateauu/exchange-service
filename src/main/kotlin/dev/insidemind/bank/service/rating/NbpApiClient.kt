@@ -1,7 +1,7 @@
 package dev.insidemind.bank.service.rating
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import dev.insidemind.bank.model.NbpApiClientException
+import dev.insidemind.bank.service.rating.dto.NbpApiResponse
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
@@ -46,20 +46,9 @@ class NbpApiClient {
 
 typealias NbpRequest = () -> HttpResponse<NbpApiResponse>
 
-fun <T> measureTimeInMillis(block: () -> T): Pair<T, Long> {
+private fun <T> measureTimeInMillis(block: () -> T): Pair<T, Long> {
     val start = System.currentTimeMillis()
     val value = block()
     val time = System.currentTimeMillis() - start
     return value to time
 }
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-data class NbpApiResponse(
-        val code: String,
-        val rates: List<NbpRatesResponse>
-)
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-data class NbpRatesResponse(
-        val ask: String
-)
