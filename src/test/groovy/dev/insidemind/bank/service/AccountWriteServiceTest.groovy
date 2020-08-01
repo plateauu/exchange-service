@@ -6,6 +6,7 @@ import dev.insidemind.bank.model.event.CreateAccountEvent
 import dev.insidemind.bank.model.event.EventType
 import dev.insidemind.bank.model.repository.AccountRepository
 import dev.insidemind.bank.model.repository.AccountWriteRepository
+import dev.insidemind.bank.service.rating.CurrencyRatingService
 import spock.lang.Specification
 import spock.lang.Subject
 
@@ -25,7 +26,7 @@ class AccountWriteServiceTest extends Specification {
         repository = new AccountRepository()
         readService = Stub(AccountReadService)
         writeRepository = new AccountWriteRepository(repository)
-        accountFactory = new AccountFactory(Stub(CurrencyRatingService))
+        accountFactory = new AccountFactory()
 
         service = new AccountWriteService(writeRepository, readService, accountFactory)
     }

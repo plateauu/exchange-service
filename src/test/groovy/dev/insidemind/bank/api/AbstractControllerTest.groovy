@@ -6,8 +6,8 @@ import dev.insidemind.bank.api.model.ExchangeRequest
 import dev.insidemind.bank.api.model.WebAmount
 import dev.insidemind.bank.model.Currency
 import dev.insidemind.bank.model.repository.AccountRepository
-import dev.insidemind.bank.service.CurrencyRating
-import dev.insidemind.bank.service.CurrencyRatingService
+import dev.insidemind.bank.service.rating.CurrencyRating
+import dev.insidemind.bank.service.rating.CurrencyRatingService
 import io.micronaut.http.HttpMethod
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse

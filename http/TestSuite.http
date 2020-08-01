@@ -5,7 +5,7 @@ Content-Type: application/json
   "name": "String",
   "surname": "String",
   "pesel": "84080808057",
-  "amount": "1234,215565"
+  "amount": "1000"
 }
 
 ###
@@ -13,10 +13,10 @@ GET http://localhost:8989/account/84080808057
 
 
 ####
-PUT http://localhost:8989/account/usd
+PUT http://localhost:8989/account/exchange/usd
 Content-Type: application/json
 
 {
   "accountId": "84080808057",
-  "amount": "300,23"
+  "amount": "5"
 }

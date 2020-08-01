@@ -11,6 +11,10 @@ micronaut:
       swagger-ui:
         paths: classpath:META-INF/swagger/views/swagger-ui
         mapping: /swagger-ui/**
+  http:
+    client:
+      read-timeout: 10s
+      connect-timeout: 10s
 
 logger:
   levels:
@@ -20,3 +24,8 @@ logger:
 jackson:
   serialization:
     writeDatesAsTimestamps: false
+
+bank:
+  api:
+    nbp:
+      url: http://api.nbp.pl/api

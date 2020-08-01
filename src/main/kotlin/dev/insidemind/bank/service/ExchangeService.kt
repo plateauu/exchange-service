@@ -5,6 +5,7 @@ import dev.insidemind.bank.model.Operation.Companion.income
 import dev.insidemind.bank.model.Operation.Companion.outcome
 import dev.insidemind.bank.model.event.ExchangeEvent
 import dev.insidemind.bank.model.event.ExchangeEventResponse
+import dev.insidemind.bank.service.rating.CurrencyRatingService
 import javax.inject.Singleton
 
 @Singleton

@@ -2,13 +2,12 @@ package dev.insidemind.bank.service
 
 import dev.insidemind.bank.model.*
 import dev.insidemind.bank.model.event.CreateAccountEvent
+import dev.insidemind.bank.service.rating.CurrencyRatingService
 import java.math.BigDecimal
 import javax.inject.Singleton
 
 @Singleton
-class AccountFactory(
-        private val currencyRatingService: CurrencyRatingService
-) {
+class AccountFactory {
 
     fun fromEvent(event: CreateAccountEvent): Account {
         val subAccounts: Map<Currency, SubAccount> = createSubAccounts(event)
