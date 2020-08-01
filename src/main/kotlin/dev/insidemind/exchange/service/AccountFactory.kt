@@ -5,8 +5,7 @@ import dev.insidemind.exchange.model.event.CreateAccountEvent
 import java.math.BigDecimal
 import javax.inject.Singleton
 
-@Singleton
-class AccountFactory {
+object AccountFactory {
 
     fun fromEvent(event: CreateAccountEvent): Account {
         val subAccounts: Map<Currency, SubAccount> = createSubAccounts(event)

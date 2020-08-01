@@ -7,13 +7,13 @@ import dev.insidemind.exchange.model.Pesel
 import dev.insidemind.exchange.model.event.CreateAccountEvent
 import dev.insidemind.exchange.model.event.CreateAccountEventResponse
 import dev.insidemind.exchange.model.repository.AccountWriteRepository
+import dev.insidemind.exchange.service.AccountFactory.fromEvent
 import javax.inject.Singleton
 
 @Singleton
 class AccountWriteService(
         private val accountWriteRepository: AccountWriteRepository,
-        private val accountReadService: AccountReadService,
-        private val accountFactory: AccountFactory
+        private val accountReadService: AccountReadService
 ) {
     fun createAccount(event: CreateAccountEvent): CreateAccountEventResponse {
         val pesel = event.pesel
@@ -21,7 +21,7 @@ class AccountWriteService(
         validatePerson(pesel)
         validateIfAccountExists(pesel)
 
-        val account = accountFactory.fromEvent(event)
+        val account = fromEvent(event)
         accountWriteRepository.save(account)
         return CreateAccountEventResponse(account.id, account.subAccounts)
     }

@@ -1,6 +1,8 @@
 package dev.insidemind.exchange.api
 
-import dev.insidemind.exchange.api.model.AccountApiResponseFactory
+import dev.insidemind.exchange.api.model.ApiResponseFactory
+import dev.insidemind.exchange.api.model.ApiResponseFactory.createCreateAccountResponse
+import dev.insidemind.exchange.api.model.ApiResponseFactory.createGetAccountBalanceResponse
 import dev.insidemind.exchange.api.model.CreateAccountRequest
 import dev.insidemind.exchange.api.model.CreateAccountResponse
 import dev.insidemind.exchange.api.model.GetAccountBalanceResponse
@@ -20,8 +22,7 @@ import org.slf4j.LoggerFactory
 @Controller("/account")
 class AccountController(
         private val accountWriteService: AccountWriteService,
-        private val accountReadService: AccountReadService,
-        private val apiResponseFactory: AccountApiResponseFactory
+        private val accountReadService: AccountReadService
 ) {
     private val logger: Logger = LoggerFactory.getLogger(AccountController::class.java)
 
@@ -39,7 +40,7 @@ class AccountController(
     fun create(@Body accountRequest: CreateAccountRequest): HttpResponse<CreateAccountResponse> {
         logger.info("Received create account request for pesel: ${accountRequest.pesel}")
         return accountWriteService.createAccount(accountRequest.toEvent())
-                .let { HttpResponse.ok(apiResponseFactory.createCreateAccountResponse(it)) }
+                .let { HttpResponse.ok(createCreateAccountResponse(it)) }
     }
 
     @ApiResponses(
@@ -57,6 +58,6 @@ class AccountController(
         val id = accountId.toAccountId()
         logger.info("Received account balance request for accountId: $id")
         return accountReadService.findAccountForOrThrow(id)
-                .let { HttpResponse.ok(apiResponseFactory.createGetAccountBalanceResponse(it)) }
+                .let { HttpResponse.ok(createGetAccountBalanceResponse(it)) }
     }
 }

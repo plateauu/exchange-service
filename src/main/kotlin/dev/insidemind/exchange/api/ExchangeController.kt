@@ -1,6 +1,7 @@
 package dev.insidemind.exchange.api
 
-import dev.insidemind.exchange.api.model.AccountApiResponseFactory
+import dev.insidemind.exchange.api.model.ApiResponseFactory
+import dev.insidemind.exchange.api.model.ApiResponseFactory.createExchangeResponse
 import dev.insidemind.exchange.api.model.ExchangeRequest
 import dev.insidemind.exchange.api.model.ExchangeResponse
 import dev.insidemind.exchange.model.Currency
@@ -22,8 +23,7 @@ import org.slf4j.LoggerFactory
 
 @Controller("/exchange")
 class ExchangeController(
-        private val exchangeService: ExchangeService,
-        private val apiResponseFactory: AccountApiResponseFactory
+        private val exchangeService: ExchangeService
 ) {
     private val logger: Logger = LoggerFactory.getLogger(ExchangeController::class.java)
 
@@ -69,6 +69,6 @@ class ExchangeController(
             to: Currency
     ): HttpResponse<ExchangeResponse> =
             exchangeService.exchange(exchangeRequest.toEvent(from, to))
-                    .let { HttpResponse.ok(apiResponseFactory.createExchangeResponse(it)) }
+                    .let { HttpResponse.ok(createExchangeResponse(it)) }
 }
 

@@ -15,7 +15,6 @@ class AccountWriteServiceTest extends Specification {
 
     private AccountReadService readService
     private AccountWriteRepository writeRepository
-    private AccountFactory accountFactory
     private AccountRepository repository
 
     @Subject
@@ -25,9 +24,8 @@ class AccountWriteServiceTest extends Specification {
         repository = new AccountRepository()
         readService = Stub(AccountReadService)
         writeRepository = new AccountWriteRepository(repository)
-        accountFactory = new AccountFactory()
 
-        service = new AccountWriteService(writeRepository, readService, accountFactory)
+        service = new AccountWriteService(writeRepository, readService)
     }
 
     def 'Should throw when person is not adult'() {

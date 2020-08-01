@@ -7,8 +7,7 @@ import dev.insidemind.exchange.model.event.CreateAccountEventResponse
 import dev.insidemind.exchange.model.event.ExchangeEventResponse
 import javax.inject.Singleton
 
-@Singleton
-class AccountApiResponseFactory {
+object ApiResponseFactory {
 
     fun createCreateAccountResponse(event: CreateAccountEventResponse): CreateAccountResponse {
         val balances = mapToSubAccountBalanceResponse(event.subAccounts)
