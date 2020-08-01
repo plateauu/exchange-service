@@ -10,3 +10,13 @@ Content-Type: application/json
 
 ###
 GET http://localhost:8989/account/84080808057
+
+
+####
+PUT http://localhost:8989/account/usd
+Content-Type: application/json
+
+{
+  "accountId": "84080808057",
+  "amount": "300,23"
+}

@@ -10,7 +10,10 @@ data class Operation(
         val direction: Direction
 ) {
     companion object {
-        fun income(amount: Amount, effectiveDate: LocalDateTime, type: EventType) = Operation(amount, effectiveDate, type, Direction.INCOME)
-        fun outcome(amount: Amount, effectiveDate: LocalDateTime, type: EventType) = Operation(amount, effectiveDate, type, Direction.OUTCOME)
+        fun income(amount: Amount, effectiveDate: LocalDateTime, type: EventType) =
+                Operation(amount, effectiveDate, type, Direction.INCOME)
+
+        fun outcome(amount: Amount, effectiveDate: LocalDateTime, type: EventType) =
+                Operation(amount.negate(), effectiveDate, type, Direction.OUTCOME)
     }
 }

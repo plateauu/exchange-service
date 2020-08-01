@@ -6,4 +6,6 @@ data class AccountId(val pesel: Pesel) {
     override fun toString(): String {
         return pesel.toString()
     }
+
+    fun unwrap() = pesel.value
 }

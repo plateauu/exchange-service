@@ -22,3 +22,7 @@ logger:
   levels:
     dev.insidemind.bank: DEBUG
     io.micronaut.context.condition: INFO
+
+jackson:
+  serialization:
+    writeDatesAsTimestamps: false

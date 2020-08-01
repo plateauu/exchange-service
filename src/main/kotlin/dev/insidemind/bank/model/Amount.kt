@@ -16,4 +16,11 @@ data class Amount(private val value: BigDecimal) {
     fun format() = value.format()
 
     fun add(other: Amount) : Amount = Amount(value.add(other.value))
+
+    fun negate(): Amount = Amount(value.negate())
+
+    operator fun compareTo(other: Amount) : Int = value.compareTo(other.value)
+
+    override fun toString(): String = value.format()
+
 }

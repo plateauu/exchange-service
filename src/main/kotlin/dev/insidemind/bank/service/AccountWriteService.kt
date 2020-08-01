@@ -1,5 +1,6 @@
 package dev.insidemind.bank.service
 
+import dev.insidemind.bank.model.Account
 import dev.insidemind.bank.model.AccountId
 import dev.insidemind.bank.model.CreateAccountValidationException
 import dev.insidemind.bank.model.Pesel
@@ -16,6 +17,7 @@ class AccountWriteService(
 ) {
     fun createAccount(event: CreateAccountEvent): CreateAccountEventResponse {
         val pesel = event.pesel
+
         validatePerson(pesel)
         validateIfAccountExists(pesel)
 
@@ -38,5 +40,7 @@ class AccountWriteService(
         if (!pesel.isAdult())
             throw CreateAccountValidationException("Account is available for a adult person")
     }
+
+    fun save(account: Account) = accountWriteRepository.save(account)
 }
 

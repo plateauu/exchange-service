@@ -6,9 +6,12 @@ import dev.insidemind.bank.model.Amount
 import dev.insidemind.bank.model.Currency
 import dev.insidemind.bank.model.Pesel
 import dev.insidemind.bank.model.event.CreateAccountEvent
+import dev.insidemind.bank.model.event.ExchangeEvent
 import dev.insidemind.bank.utils.format
 import dev.insidemind.bank.utils.parse
+import dev.insidemind.bank.utils.toAccountId
 import java.math.BigDecimal
+import java.time.LocalDateTime
 
 data class GetAccountBalanceResponse(
         val accountId: String,
@@ -29,6 +32,24 @@ data class CreateAccountResponse(
         val accountId: String,
         val subAccounts: Map<Currency, SubAccountBalanceResponse>
 )
+
+data class ExchangeResponse(
+        val accountId: String,
+        val subAccounts: Map<Currency, SubAccountBalanceResponse>,
+        val operationDate: LocalDateTime
+)
+
+data class ExchangeRequest(
+        val accountId: String,
+        val amount: WebAmount
+) {
+    fun toEvent(from: Currency, to: Currency): ExchangeEvent = ExchangeEvent(
+            accountId = accountId.toAccountId(),
+            amount = Amount(amount.value),
+            from = from,
+            to = to
+    )
+}
 
 data class CreateAccountRequest(
         val name: String,

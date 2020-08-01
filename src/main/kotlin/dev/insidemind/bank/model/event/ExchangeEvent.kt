@@ -6,7 +6,7 @@ import dev.insidemind.bank.model.Currency
 
 class ExchangeEvent(
         val accountId: AccountId,
-        val toCurrency: Currency,
-        val fromCurrency: Currency,
+        val to: Currency,
+        val from: Currency,
         amount: Amount
 ) : Event(EventType.EXCHANGE, amount)

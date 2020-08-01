@@ -6,6 +6,6 @@ data class Account(
         val surname: String,
         val subAccounts: Map<Currency, SubAccount>
 ) {
-    fun unwrapId() = id.pesel.value
+    fun unwrapId() = id.unwrap()
 }
 

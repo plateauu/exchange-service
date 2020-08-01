@@ -14,6 +14,8 @@ class SubAccount(
             .map { it.amount }
             .reduce { accumulator, amount -> accumulator.add(amount) }
 
+    fun isSufficientAmount(amount: Amount) = amount() >= amount
+
     @Synchronized
     fun addOperation(operation: Operation) {
         operations.add(operation)

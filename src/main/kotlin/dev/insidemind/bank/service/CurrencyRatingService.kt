@@ -1,5 +1,6 @@
 package dev.insidemind.bank.service
 
+import dev.insidemind.bank.model.Amount
 import dev.insidemind.bank.utils.annotation.Mockable
 import java.math.BigDecimal
 import javax.inject.Singleton
@@ -7,11 +8,20 @@ import javax.inject.Singleton
 @Mockable
 @Singleton
 class CurrencyRatingService {
-    fun getCurrentRating(): CurrencyRating {
-        return CurrencyRating(BigDecimal(4.213123))
 
+    fun getCurrentPlnToUsdRating(): CurrencyRating {
+        return CurrencyRating(BigDecimal(0.23))
+
+    }
+
+    fun getCurrentUsdToPlnRating(): CurrencyRating {
+        return CurrencyRating(BigDecimal(3.75))
     }
 
 }
 
-data class CurrencyRating(val value: BigDecimal)
+data class CurrencyRating(private val rating: BigDecimal) {
+
+    fun exchange(amount: Amount): Amount = amount.multiply(Amount(rating))
+
+}

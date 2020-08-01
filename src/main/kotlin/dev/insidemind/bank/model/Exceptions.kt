@@ -5,3 +5,4 @@ class CreateAccountValidationException(message: String) : BankServiceException(m
 class PeselValidationException(message: String) : BankServiceException(message)
 class AccountNotFountException(message: String) : BankServiceException(message)
 class InconsistentAccountNumberException(message: String) : BankServiceException(message)
+class InsufficientSubAccountAmountException(message: String) : BankServiceException(message)
