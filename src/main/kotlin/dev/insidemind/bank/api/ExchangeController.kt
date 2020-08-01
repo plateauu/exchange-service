@@ -14,7 +14,7 @@ import io.micronaut.http.annotation.Put
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-@Controller("/account")
+@Controller("/account/exchange")
 class ExchangeController(
         private val exchangeService: ExchangeService,
         private val apiResponseFactory: AccountApiResponseFactory

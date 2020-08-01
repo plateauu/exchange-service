@@ -1,6 +1,6 @@
 package dev.insidemind.bank.api
 
-import dev.insidemind.bank.TestObjectsRepository
+
 import dev.insidemind.bank.api.model.CreateAccountRequest
 import dev.insidemind.bank.api.model.ExchangeRequest
 import dev.insidemind.bank.api.model.WebAmount
@@ -36,7 +36,7 @@ class AbstractControllerTest extends Specification {
     protected HttpClient client
 
     @Inject
-    protected AccountRepository repository
+    private AccountRepository repository
 
     @MockBean(CurrencyRatingService)
     CurrencyRatingService ratingService() {

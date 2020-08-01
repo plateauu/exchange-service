@@ -12,7 +12,7 @@ class ExchangeControllerTest extends AbstractControllerTest {
 
     def 'Should exchange money to USD currency when usd endpoint is called'() {
         when:
-        def response = exchange('/account/usd')
+        def response = exchange('/account/exchange/usd')
 
         then:
         response.status == HttpStatus.OK
@@ -28,10 +28,10 @@ class ExchangeControllerTest extends AbstractControllerTest {
 
     def 'Should exchange money to PLN currency when pln endpoint is called'() {
         given: 'Some USD has been bought'
-        exchange('/account/usd')
+        exchange('/account/exchange/usd')
 
         when:
-        def response = exchange('/account/pln')
+        def response = exchange('/account/exchange/pln')
 
         then:
         response.status == HttpStatus.OK
