@@ -14,7 +14,7 @@ class ExceptionHandlingControllerTest extends AbstractControllerTest {
     def 'Should return precondition failed status (412) when account number is not valid'() {
         given:
         def exchangeRequest = new ExchangeRequest('1234', new WebAmount('10'))
-        def httpRequest = HttpRequest.create(HttpMethod.PUT, '/account/exchange/usd').body(exchangeRequest)
+        def httpRequest = HttpRequest.create(HttpMethod.PUT, '/exchange/usd').body(exchangeRequest)
 
         when:
         client

@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-@Controller("/account/exchange")
+@Controller("/exchange")
 class ExchangeController(
         private val exchangeService: ExchangeService,
         private val apiResponseFactory: AccountApiResponseFactory

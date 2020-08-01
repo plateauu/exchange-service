@@ -13,7 +13,7 @@ GET http://localhost:8989/account/84080808057
 
 
 ####
-PUT http://localhost:8989/account/exchange/usd
+PUT http://localhost:8989/exchange/usd
 Content-Type: application/json
 
 {
@@ -22,10 +22,10 @@ Content-Type: application/json
 }
 
 ####
-PUT http://localhost:8989/account/exchange/pln
+PUT http://localhost:8989/exchange/pln
 Content-Type: application/json
 
 {
   "accountId": "84080808057",
-  "amount": "5"
+  "amount": "37,5"
 }
