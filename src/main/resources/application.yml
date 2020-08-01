@@ -1,6 +1,6 @@
 micronaut:
   application:
-    name: bank
+    name: exchange-service
   server:
     port: 8989
   router:

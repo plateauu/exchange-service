@@ -8,7 +8,7 @@ plugins {
 }
 
 version "0.1"
-group "dev.insidemind.bank"
+group "dev.insidemind.exchange"
 
 repositories {
     mavenCentral()
@@ -51,7 +51,7 @@ dependencies {
 
 test.classpath += configurations.developmentOnly
 
-mainClassName = "dev.insidemind.bank.ApplicationKt"
+mainClassName = "dev.insidemind.exchange.ApplicationKt"
 
 // use JUnit 5 platform
 test {
@@ -64,7 +64,7 @@ java {
 
 allOpen {
     annotation("io.micronaut.aop.Around")
-    annotation("dev.insidemind.bank.utils.annotation.Mockable")
+    annotation("dev.insidemind.exchange.utils.annotation.Mockable")
 }
 compileKotlin {
     kotlinOptions {
@@ -82,9 +82,9 @@ compileTestKotlin {
 kapt {
     arguments {
         arg("micronaut.processing.incremental", false)
-        arg("micronaut.processing.annotations", "dev.insidemind.bank.*")
-        arg("micronaut.processing.group", "dev.insidemind.bank")
-        arg("micronaut.processing.module", "bank")
+        arg("micronaut.processing.annotations", "dev.insidemind.exchange.*")
+        arg("micronaut.processing.group", "dev.insidemind.exchange")
+        arg("micronaut.processing.module", "exchange-service")
         arg("micronaut.openapi.views.spec", "swagger-ui.enabled=true,swagger-ui.theme=flattop")
     }
 }
