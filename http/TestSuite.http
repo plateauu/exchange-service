@@ -20,3 +20,12 @@ Content-Type: application/json
   "accountId": "84080808057",
   "amount": "5"
 }
+
+####
+PUT http://localhost:8989/account/exchange/pln
+Content-Type: application/json
+
+{
+  "accountId": "84080808057",
+  "amount": "5"
+}
