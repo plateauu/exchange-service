@@ -6,8 +6,8 @@ import io.swagger.v3.oas.annotations.info.Info
 
 @OpenAPIDefinition(
     info = Info(
-            title = "bank",
-            version = "0.0"
+            title = "Exchange Service",
+            version = "0.1"
     )
 )
 object Api {
