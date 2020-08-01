@@ -1,9 +1,7 @@
-package dev.insidemind.exchange.service
+package dev.insidemind.exchange.model
 
-import dev.insidemind.exchange.model.*
 import dev.insidemind.exchange.model.event.CreateAccountEvent
 import java.math.BigDecimal
-import javax.inject.Singleton
 
 object AccountFactory {
 

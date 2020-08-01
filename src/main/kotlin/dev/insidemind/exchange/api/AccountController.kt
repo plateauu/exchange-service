@@ -33,7 +33,7 @@ class AccountController(
                             schema = Schema(implementation = CreateAccountResponse::class)
                     )]),
             ApiResponse(description = "Account already exists", responseCode = "422"),
-            ApiResponse(description = "Bad PESEL data", responseCode = "412")
+            ApiResponse(description = "Wrong PESEL number", responseCode = "412")
     )
     @Produces(MediaType.APPLICATION_JSON)
     @Post

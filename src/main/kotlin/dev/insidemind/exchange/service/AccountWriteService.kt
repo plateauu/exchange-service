@@ -7,7 +7,7 @@ import dev.insidemind.exchange.model.Pesel
 import dev.insidemind.exchange.model.event.CreateAccountEvent
 import dev.insidemind.exchange.model.event.CreateAccountEventResponse
 import dev.insidemind.exchange.model.repository.AccountWriteRepository
-import dev.insidemind.exchange.service.AccountFactory.fromEvent
+import dev.insidemind.exchange.model.AccountFactory.fromEvent
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import javax.inject.Singleton
