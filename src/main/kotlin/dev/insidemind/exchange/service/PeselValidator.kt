@@ -2,9 +2,13 @@ package dev.insidemind.exchange.service
 
 import dev.insidemind.exchange.model.Pesel
 import dev.insidemind.exchange.model.PeselValidationException
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 object PeselValidator {
     private const val PESEL_LENGHT = 11
+
+    private val logger: Logger = LoggerFactory.getLogger(Pesel::class.java)
 
     fun validate(pesel: Pesel) {
 
@@ -25,10 +29,12 @@ object PeselValidator {
         isCheckNumberCorrect(sum, peselIntArray)
     }
 
-    private fun isAllDigits(peselArray: CharArray, pesel: Pesel) =
-            peselArray.forEach {
-                if (!it.isDigit()) throw PeselValidationException("Wrong pesel: $pesel .Pesel number may contain only digits.")
-            }
+    private fun isAllDigits(peselArray: CharArray, pesel: Pesel) {
+        peselArray.forEach {
+            if (!it.isDigit()) throw PeselValidationException("Wrong pesel: $pesel. Pesel number may contain only digits.")
+        }
+        logger.debug("Validation: All digits - positive")
+    }
 
     private fun isCheckNumberCorrect(
             sum: Int,
@@ -45,6 +51,7 @@ object PeselValidator {
             if (calculatedLastDigit != lastDigit)
                 throw PeselValidationException("Incorrect Pesel Number. Last number should be equal to $calculatedLastDigit instead $lastDigit")
         }
+        logger.debug("Validation: CheckNumber - positive")
     }
 
     private fun getMultiplier(index: Int): Int =

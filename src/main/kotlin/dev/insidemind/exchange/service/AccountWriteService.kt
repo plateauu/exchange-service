@@ -8,6 +8,8 @@ import dev.insidemind.exchange.model.event.CreateAccountEvent
 import dev.insidemind.exchange.model.event.CreateAccountEventResponse
 import dev.insidemind.exchange.model.repository.AccountWriteRepository
 import dev.insidemind.exchange.service.AccountFactory.fromEvent
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import javax.inject.Singleton
 
 @Singleton
@@ -15,6 +17,8 @@ class AccountWriteService(
         private val accountWriteRepository: AccountWriteRepository,
         private val accountReadService: AccountReadService
 ) {
+    private val logger: Logger = LoggerFactory.getLogger(AccountWriteService::class.java)
+
     fun createAccount(event: CreateAccountEvent): CreateAccountEventResponse {
         val pesel = event.pesel
 
@@ -34,11 +38,13 @@ class AccountWriteService(
                             "Account for accountId: ${accountId.pesel.value} already exists. You can posses only one account"
                     )
                 }
+        logger.debug("AccountId $pesel is valid. Does not exist.")
     }
 
     private fun validatePerson(pesel: Pesel) {
         if (!pesel.isAdult())
             throw CreateAccountValidationException("Account is available for a adult person")
+        logger.debug("Pesel $pesel belongs to adult person. Positive validation")
     }
 
     fun save(account: Account) = accountWriteRepository.save(account)

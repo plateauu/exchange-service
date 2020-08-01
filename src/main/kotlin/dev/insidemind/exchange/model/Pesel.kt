@@ -1,9 +1,12 @@
 package dev.insidemind.exchange.model
 
 import dev.insidemind.exchange.service.PeselValidator
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import java.time.Clock
 import java.time.LocalDate
 import java.time.Period
+import java.time.format.DateTimeFormatter.ISO_DATE
 
 class Pesel(
         val value: String,
@@ -11,6 +14,8 @@ class Pesel(
 ) {
 
     constructor(value: String) : this(value, Clock.systemDefaultZone())
+
+    private val logger: Logger = LoggerFactory.getLogger(Pesel::class.java)
 
     companion object {
         private const val LEGAL_AGE = 18
@@ -37,6 +42,9 @@ class Pesel(
         val day = birthDateArray.substring(4, 6)
 
         return LocalDate.of(year, month.toInt(), day.toInt())
+                .also {
+                    logger.debug("Date of birth is: ${it.format(ISO_DATE)}")
+                }
     }
 
     private fun evaluateCentury(monthNumber: Int): Pair<Month, Century> =
