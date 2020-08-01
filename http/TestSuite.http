@@ -4,8 +4,8 @@ Content-Type: application/json
 {
   "name": "String",
   "surname": "String",
-  "pesel": "84080808057",
-  "amount": "1000"
+  "pesel": "92050602479",
+  "amount": "1000,234"
 }
 
 ###
@@ -17,7 +17,7 @@ PUT http://localhost:8989/exchange/usd
 Content-Type: application/json
 
 {
-  "accountId": "84080808057",
+  "accountId": "92050602479",
   "amount": "5"
 }
 
@@ -26,6 +26,6 @@ PUT http://localhost:8989/exchange/pln
 Content-Type: application/json
 
 {
-  "accountId": "84080808057",
-  "amount": "37,5"
+  "accountId": "92050602479",
+  "amount": "5,5"
 }
