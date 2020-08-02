@@ -8,10 +8,12 @@ import dev.insidemind.exchange.model.event.CreateAccountEvent
 import dev.insidemind.exchange.model.event.CreateAccountEventResponse
 import dev.insidemind.exchange.model.repository.AccountWriteRepository
 import dev.insidemind.exchange.model.AccountFactory.fromEvent
+import dev.insidemind.exchange.utils.annotation.Mockable
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import javax.inject.Singleton
 
+@Mockable
 @Singleton
 class AccountWriteService(
         private val accountWriteRepository: AccountWriteRepository,
