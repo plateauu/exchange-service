@@ -6,6 +6,7 @@ import com.github.tomakehurst.wiremock.matching.UrlPattern
 import dev.insidemind.exchange.model.NbpApiClientException
 import io.micronaut.test.annotation.MicronautTest
 import io.micronaut.test.support.TestPropertyProvider
+import spock.lang.Shared
 import spock.lang.Specification
 
 import javax.inject.Inject
@@ -18,9 +19,11 @@ import static com.github.tomakehurst.wiremock.matching.RequestPatternBuilder.new
 @MicronautTest
 class NbpApiClientTest extends Specification implements TestPropertyProvider {
 
-    private static WireMockServer wireMockServer
+    @Shared
+    private static WireMockServer wireMockServer = new WireMockServer(wireMockConfig().dynamicPort()).tap { start() }
 
-    private static int port
+    @Shared
+    private static int port = wireMockServer.port()
 
     void setupSpec() {
         configureFor("localhost", port);
@@ -114,9 +117,6 @@ class NbpApiClientTest extends Specification implements TestPropertyProvider {
 
     @Override
     Map<String, String> getProperties() {
-        wireMockServer = new WireMockServer(wireMockConfig().dynamicPort())
-        wireMockServer.start()
-        port = wireMockServer.port()
         return ['bank.api.nbp.url': "http://localhost:$port"]
     }
 }
