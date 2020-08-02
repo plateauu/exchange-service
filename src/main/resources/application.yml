@@ -13,12 +13,12 @@ micronaut:
         mapping: /swagger-ui/**
   http:
     client:
-      read-timeout: 10s
-      connect-timeout: 10s
+      read-timeout: 5s
+      connect-timeout: 5s
 
 logger:
   levels:
-    dev.insidemind.exchange: DEBUG
+    dev.insidemind.exchange: INFO
     io.micronaut.context.condition: INFO
 
 jackson:
