@@ -1,6 +1,5 @@
 package dev.insidemind.exchange.service
 
-
 import dev.insidemind.exchange.model.*
 import dev.insidemind.exchange.model.event.EventType
 import dev.insidemind.exchange.model.event.ExchangeEvent
