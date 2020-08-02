@@ -7,6 +7,7 @@ import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.RxHttpClient
 import io.micronaut.http.client.annotation.Client
+import io.micronaut.http.client.exceptions.HttpClientResponseException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import javax.inject.Inject
@@ -15,12 +16,20 @@ import javax.inject.Singleton
 @Singleton
 class NbpApiClient {
 
+    companion object {
+        private const val ENDPOINT: String = "/exchangerates/rates/c/usd/"
+    }
+
     private val logger: Logger = LoggerFactory.getLogger(NbpApiClient::class.java)
 
     private val request: NbpRequest = {
-        httpClient
-                .toBlocking()
-                .exchange(HttpRequest.GET<Void>("/exchangerates/rates/c/usd/"), NbpApiResponse::class.java)
+        try {
+            httpClient
+                    .toBlocking()
+                    .exchange(HttpRequest.GET<Void>(ENDPOINT), NbpApiResponse::class.java)
+        } catch (ex: HttpClientResponseException) {
+            ex.response
+        }
     }
 
     private val requestLogger = { httpRequest: NbpRequest ->
@@ -40,11 +49,14 @@ class NbpApiClient {
         if (response.status >= HttpStatus.BAD_REQUEST)
             throw NbpApiClientException("Exception trying fetch currency rating. Reason: ${response.reason()}")
 
-        return response.body()!!
+        @Suppress("UNCHECKED_CAST")
+        return response
+                .let { it as HttpResponse<NbpApiResponse?> }
+                .body() ?: throw NbpApiClientException("No rating fetched")
     }
 }
 
-typealias NbpRequest = () -> HttpResponse<NbpApiResponse>
+typealias NbpRequest = () -> HttpResponse<*>
 
 private fun <T> measureTimeInMillis(block: () -> T): Pair<T, Long> {
     val start = System.currentTimeMillis()
